@@ -2,12 +2,13 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; // <--- Critical Import
 import { HttpClient } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-login',
   standalone: true,  // <--- Marks this as a standalone component
-  imports: [CommonModule, FormsModule], // <--- Gives it access to ngModel
+  imports: [CommonModule, FormsModule, RouterModule], // <--- Gives it access to ngModel
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
