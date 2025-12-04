@@ -1,0 +1,136 @@
+/* Container Background - Dark "Cosmic" feel */
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #1a1a1a;
+  background-image: radial-gradient(circle at 20% 30%, #2a2a2a 0%, #111 100%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* The Glass/Dark Card */
+.login-card {
+  background: rgba(30, 30, 30, 0.8); /* Semi-transparent dark */
+  padding: 40px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+  color: white;
+}
+
+.brand-header h3 {
+  margin: 0;
+  font-weight: 400;
+  text-align: left;
+  margin-bottom: 20px;
+  color: #ddd;
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 30px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+/* Input Fields */
+.input-group {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 15px 15px 15px 45px; /* Extra left padding for icon */
+  background: #2b2b2b;
+  border: 1px solid #444;
+  border-radius: 8px;
+  color: white;
+  font-size: 14px;
+  box-sizing: border-box; /* Keeps padding inside width */
+}
+
+.input-group .icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  font-size: 14px;
+}
+
+/* The Login Button - Orange/Purple Gradient */
+.login-btn {
+  width: 100%;
+  padding: 15px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  /* Specific gradient from your proposal image */
+  background: linear-gradient(90deg, #ff8c42 0%, #a259ff 100%);
+  transition: opacity 0.3s;
+}
+
+.login-btn:hover {
+  opacity: 0.9;
+}
+
+/* Links and Extras */
+.helper-links {
+  margin-top: 15px;
+  font-size: 13px;
+}
+
+.forgot-pass, .signup-area a {
+  color: #aaa;
+  text-decoration: none;
+}
+
+.forgot-pass:hover, .signup-area a:hover {
+  color: white;
+  text-decoration: underline;
+}
+
+.divider {
+  margin: 20px 0;
+  border-bottom: 1px solid #444;
+  line-height: 0.1em;
+  color: #888;
+  font-size: 12px;
+}
+
+.divider span {
+  background: rgba(30, 30, 30, 1); /* Matches card bg to hide line behind text */
+  padding: 0 10px;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.social-btn {
+  background: #2b2b2b;
+  border: 1px solid #444;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.signup-area {
+  font-size: 13px;
+  color: #888;
+}
