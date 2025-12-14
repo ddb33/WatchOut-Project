@@ -1,16 +1,128 @@
-.dashboard-container { font-family: sans-serif; background: #141414; color: white; min-height: 100vh; }
-.navbar { display: flex; justify-content: space-between; padding: 20px; background: #000; }
-.logout-btn { background: #e50914; color: white; border: none; padding: 8px 16px; cursor: pointer; }
-.content { padding: 20px; }
-.movie-grid { 
-  display: grid; 
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
-  gap: 20px; 
+/* Main Dashboard Layout */
+.dashboard-container {
+  font-family: Arial, sans-serif;
+  background-color: #141414; /* Netflix Dark Background */
+  min-height: 100vh;
+  color: white;
 }
-.movie-card { background: #222; border-radius: 8px; overflow: hidden; transition: transform 0.2s; }
-.movie-card:hover { transform: scale(1.05); }
-.poster { width: 100%; height: 300px; object-fit: cover; }
-.movie-info { padding: 10px; }
-.movie-info h3 { font-size: 1rem; margin: 0; }
-.rating { color: #ffd700; font-weight: bold; }
-.date { font-size: 0.8rem; color: #ccc; }
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background-color: #000;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+
+.navbar h1 {
+  margin: 0;
+  font-size: 24px;
+  color: #e50914; /* Netflix Red */
+}
+
+.logout-btn {
+  background-color: #e50914;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.logout-btn:hover {
+  background-color: #f40612;
+}
+
+/* Content Area */
+.content {
+  padding: 20px;
+}
+
+h2 {
+  margin-bottom: 15px;
+  border-bottom: 1px solid #333;
+  padding-bottom: 10px;
+}
+
+/* Search Bar Styling */
+.search-container {
+  margin: 20px 0 30px 0; /* Spacing top/bottom */
+  display: flex;
+  justify-content: center;
+}
+
+.search-input {
+  width: 100%;
+  max-width: 400px;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 25px;
+  border: none;
+  background-color: #333;
+  color: white;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+.search-input:focus {
+  background-color: #444;
+  box-shadow: 0 0 8px rgba(229, 9, 20, 0.6); /* Red Glow */
+  transform: scale(1.02);
+}
+
+.search-input::placeholder {
+  color: #bbb;
+}
+
+/* Grid Layout */
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+/* Movie Card */
+.movie-card {
+  background-color: #1f1f1f;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.movie-card:hover {
+  transform: scale(1.05);
+}
+
+.movie-card img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.movie-info {
+  padding: 10px;
+}
+
+.movie-info h3 {
+  font-size: 16px;
+  margin: 0 0 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rating {
+  color: #ffc107; /* Gold Star */
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+.date {
+  font-size: 12px;
+  color: #aaa;
+}
