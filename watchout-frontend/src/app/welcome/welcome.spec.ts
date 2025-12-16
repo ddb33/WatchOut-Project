@@ -8,7 +8,6 @@ describe('Welcome', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Welcome]
     })
     .compileComponents();
 

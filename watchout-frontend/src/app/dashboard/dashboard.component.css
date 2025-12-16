@@ -1,128 +1,99 @@
-/* Main Dashboard Layout */
-.dashboard-container {
-  font-family: Arial, sans-serif;
-  background-color: #141414; /* Netflix Dark Background */
-  min-height: 100vh;
-  color: white;
+/* Main Layout */
+.main-container {
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-/* Navbar */
-.navbar {
+/* Header & Search */
+.header-section {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  padding: 15px 30px;
-  background-color: #000;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+  margin-bottom: 50px;
+  text-align: center;
 }
 
-.navbar h1 {
-  margin: 0;
-  font-size: 24px;
-  color: #e50914; /* Netflix Red */
+h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 25px;
+  text-shadow: 0 0 10px rgba(138, 43, 226, 0.6); /* Purple Glow */
 }
 
-.logout-btn {
-  background-color: #e50914;
-  color: white;
-  border: none;
-  padding: 8px 15px;
-  cursor: pointer;
-  border-radius: 4px;
-  font-weight: bold;
-}
-
-.logout-btn:hover {
-  background-color: #f40612;
-}
-
-/* Content Area */
-.content {
-  padding: 20px;
-}
-
-h2 {
-  margin-bottom: 15px;
-  border-bottom: 1px solid #333;
-  padding-bottom: 10px;
-}
-
-/* Search Bar Styling */
-.search-container {
-  margin: 20px 0 30px 0; /* Spacing top/bottom */
-  display: flex;
-  justify-content: center;
-}
-
-.search-input {
+.search-bar {
   width: 100%;
-  max-width: 400px;
-  padding: 12px 20px;
-  font-size: 16px;
-  border-radius: 25px;
-  border: none;
-  background-color: #333;
+  max-width: 500px;
+  padding: 15px 25px;
+  border-radius: 30px;
+  border: 2px solid #3e2060;
+  background-color: rgba(20, 20, 30, 0.9); /* Dark semi-transparent */
   color: white;
+  font-size: 1.1rem;
   outline: none;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
 }
 
-.search-input:focus {
-  background-color: #444;
-  box-shadow: 0 0 8px rgba(229, 9, 20, 0.6); /* Red Glow */
-  transform: scale(1.02);
+.search-bar::placeholder {
+  color: #888;
 }
 
-.search-input::placeholder {
-  color: #bbb;
+.search-bar:focus {
+  border-color: #9d4edd; /* Bright purple border on focus */
+  box-shadow: 0 0 15px rgba(157, 78, 221, 0.4);
 }
 
 /* Grid Layout */
 .movie-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  justify-content: center;
 }
 
-/* Movie Card */
+/* Card Styling */
 .movie-card {
-  background-color: #1f1f1f;
-  border-radius: 8px;
+  width: 220px;
+  background-color: #1e1e24; /* Dark card background */
+  border-radius: 12px;
   overflow: hidden;
-  transition: transform 0.2s;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
+  border: 1px solid #2a2a35;
 }
 
 .movie-card:hover {
-  transform: scale(1.05);
+  transform: translateY(-8px);
+  box-shadow: 0 10px 20px rgba(110, 35, 200, 0.3); /* Purple shadow on hover */
+  border-color: #7b2cbf;
 }
 
-.movie-card img {
+/* Image Styling */
+.movie-poster {
   width: 100%;
-  height: 300px;
+  height: 330px;
   object-fit: cover;
 }
 
+/* Text Styling */
 .movie-info {
-  padding: 10px;
+  padding: 15px;
+  text-align: center;
+  background: linear-gradient(to top, #151515, #1e1e24);
 }
 
 .movie-info h3 {
-  font-size: 16px;
-  margin: 0 0 5px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  margin: 0;
+  color: #e0e0e0;
+  font-size: 1rem;
+  font-weight: 500;
 }
 
-.rating {
-  color: #ffc107; /* Gold Star */
-  font-size: 14px;
-  margin: 5px 0;
-}
-
-.date {
-  font-size: 12px;
-  color: #aaa;
+.no-results {
+  text-align: center;
+  margin-top: 50px;
+  font-size: 1.3rem;
+  color: #bbb;
 }

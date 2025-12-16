@@ -1,60 +1,63 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-dashboard',
-  standalone: true,
-  imports: [CommonModule, RouterModule],
+  standalone: false,
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  movies: any[] = [];     // Currently visible movies
-  allMovies: any[] = [];  // Master list of ALL movies
+  
+  searchText: string = '';
+  movies: any[] = [];
+  filteredMovies: any[] = [];
 
-  constructor(
-    private http: HttpClient, 
-    private router: Router,
-    private cdr: ChangeDetectorRef 
-  ) {}
+  // YOUR API KEY (Make sure this is still correct!)
+  private apiKey = '0fe3133595252f07c96220d4833513ad'; 
+  private apiUrl = 'https://api.themoviedb.org/3/movie/now_playing';
 
-  ngOnInit() {
+  // We inject ChangeDetectorRef to force the screen to update
+  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {}
+
+  ngOnInit(): void {
+    console.log('Dashboard initialized. Fetching movies...');
     this.fetchMovies();
   }
 
   fetchMovies() {
-    this.http.get<any[]>(`${environment.apiUrl}/movies`)
-      .subscribe({
-        next: (data) => {
-          this.allMovies = data; // Save master copy
-          this.movies = data;    // Show all
-          this.cdr.detectChanges(); // <--- Force screen update on load
-        },
-        error: (err) => {
-          console.error('Error fetching movies:', err);
-        }
-      });
+    const url = `${this.apiUrl}?api_key=${this.apiKey}&language=en-US&page=1`;
+
+    this.http.get<any>(url).subscribe({
+      next: (data) => {
+        console.log('API Data received:', data); // Check your browser console for this!
+
+        this.movies = data.results.map((m: any) => ({
+          _id: m.id,
+          title: m.title,
+          poster: m.poster_path ? `https://image.tmdb.org/t/p/w500${m.poster_path}` : 'https://placehold.co/500x750?text=No+Image',
+          overview: m.overview,
+          release_date: m.release_date
+        }));
+
+        // Copy to filtered list
+        this.filteredMovies = [...this.movies];
+        
+        console.log('Movies set. Count:', this.filteredMovies.length);
+
+        // FORCE Angular to update the screen immediately
+        this.cdr.detectChanges();
+      },
+      error: (error) => {
+        console.error('API Error:', error);
+      }
+    });
   }
 
-  // --- FIXED SEARCH FUNCTION ---
-  onSearch(event: any) {
-    const searchTerm = event.target.value.toLowerCase();
-    console.log('Searching for:', searchTerm); // Debug check
-
-    // Filter the master list
-    this.movies = this.allMovies.filter(movie => 
-      movie.title.toLowerCase().includes(searchTerm)
-    );
-
-    // <--- THIS WAS MISSING: Force screen to repaint with new list
-    this.cdr.detectChanges(); 
-  }
-
-  onLogout() {
-    this.router.navigate(['/login']);
+  onSearch(): void {
+    const text = this.searchText.toLowerCase();
+    this.filteredMovies = this.movies.filter(movie => {
+      return movie.title.toLowerCase().includes(text);
+    });
   }
 }

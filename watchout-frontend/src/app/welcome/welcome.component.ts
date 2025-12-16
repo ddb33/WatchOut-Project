@@ -3,9 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router'; // <--- Needed for routerLink
 
 @Component({
+  standalone: false,
   selector: 'app-welcome',
-  standalone: true,
-  imports: [CommonModule, RouterModule],
   templateUrl: './welcome.component.html',
   styleUrls: ['./welcome.component.css']
 })

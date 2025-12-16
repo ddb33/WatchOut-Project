@@ -1,41 +1,39 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { RouterModule, Router } from '@angular/router'; // <--- 1. Import Router
-
-import { environment } from '../../environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  standalone: false
 })
 export class LoginComponent {
+  // We use 'email' here to match the form input and the backend expectation
   email = '';
   password = '';
-  message = '';
+  errorMessage = '';
 
-  // 2. Inject Router in the constructor
   constructor(private http: HttpClient, private router: Router) {}
 
   onLogin() {
-    const loginData = { email: this.email, password: this.password };
-    
-    this.http.post<any>(`${environment.apiUrl}/login`, loginData)
-      .subscribe({
-        next: (res) => {
-          this.message = res.message;
-          // 3. Redirect to dashboard on success!
-          setTimeout(() => {
-            this.router.navigate(['/dashboard']);
-          }, 500); // Small delay so user sees "Success" message briefly
-        },
-        error: (err) => {
-          this.message = 'Login Failed: ' + (err.error.message || 'Check Backend Connection');
-        }
-      });
+    // 1. Create the payload exactly how the backend wants it
+    const loginData = {
+      email: this.email,     // <--- THIS WAS THE FIX (Changed from username to email)
+      password: this.password
+    };
+
+    // 2. Send it to the Backend
+    this.http.post<any>('http://192.168.50.20:3000/login', loginData).subscribe({
+      next: (response) => {
+        console.log('Login successful!', response);
+        // Redirect to dashboard on success
+        this.router.navigate(['/dashboard']);
+      },
+      error: (error) => {
+        console.error('Login failed', error);
+        this.errorMessage = 'Login Failed. Please check your email and password.';
+      }
+    });
   }
 }

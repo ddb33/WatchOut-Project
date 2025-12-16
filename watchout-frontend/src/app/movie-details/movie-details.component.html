@@ -1,1 +1,38 @@
-<p>movie-details works!</p>
+<div *ngIf="!movie" style="color: white; text-align: center; padding: 50px;">
+  Loading...
+</div>
+
+<div class="details-container" *ngIf="movie">
+  <div class="backdrop" [style.backgroundImage]="'url(' + movie.posterUrl + ')'"></div>
+  
+  <div class="content">
+    <div class="poster-wrapper">
+      <img [src]="movie.posterUrl" class="main-poster">
+    </div>
+    
+    <div class="info">
+      <h1>{{ movie.title }}</h1>
+      <div class="meta">
+        <span class="year">{{ movie.releaseDate }}</span>
+        <span class="runtime">{{ movie.runtime }}</span>
+      </div>
+      
+      <div class="genres">
+        <span class="genre-tag" *ngFor="let genre of movie.genres">{{ genre }}</span>
+      </div>
+
+      <p class="description">{{ movie.description }}</p>
+
+      <div class="showtimes-section">
+        <h3>Playing at: {{ movie.theater || 'Local Theater' }}</h3>
+        <div class="time-grid">
+          <button class="time-btn" *ngFor="let time of movie.showtimes">
+            {{ time }}
+          </button>
+        </div>
+      </div>
+      <br>
+      <a routerLink="/dashboard" class="back-link">← Back to Dashboard</a>
+    </div>
+  </div>
+</div>
