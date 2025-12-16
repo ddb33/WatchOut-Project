@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router'; // <--- Import Router
 
 @Component({
   selector: 'app-dashboard',
@@ -13,12 +14,15 @@ export class DashboardComponent implements OnInit {
   movies: any[] = [];
   filteredMovies: any[] = [];
 
-  // YOUR API KEY (Make sure this is still correct!)
+  // ⚠️ YOUR API KEY HERE
   private apiKey = '0fe3133595252f07c96220d4833513ad'; 
   private apiUrl = 'https://api.themoviedb.org/3/movie/now_playing';
 
-  // We inject ChangeDetectorRef to force the screen to update
-  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private http: HttpClient, 
+    private cdr: ChangeDetectorRef,
+    private router: Router // <--- Inject Router
+  ) {}
 
   ngOnInit(): void {
     console.log('Dashboard initialized. Fetching movies...');
@@ -30,7 +34,7 @@ export class DashboardComponent implements OnInit {
 
     this.http.get<any>(url).subscribe({
       next: (data) => {
-        console.log('API Data received:', data); // Check your browser console for this!
+        console.log('API Data received:', data);
 
         this.movies = data.results.map((m: any) => ({
           _id: m.id,
@@ -40,12 +44,7 @@ export class DashboardComponent implements OnInit {
           release_date: m.release_date
         }));
 
-        // Copy to filtered list
         this.filteredMovies = [...this.movies];
-        
-        console.log('Movies set. Count:', this.filteredMovies.length);
-
-        // FORCE Angular to update the screen immediately
         this.cdr.detectChanges();
       },
       error: (error) => {
@@ -59,5 +58,12 @@ export class DashboardComponent implements OnInit {
     this.filteredMovies = this.movies.filter(movie => {
       return movie.title.toLowerCase().includes(text);
     });
+  }
+
+  // <--- THE NEW LOGOUT FUNCTION
+  logout() {
+    // In the future, this is where we delete the token
+    console.log('User logged out');
+    this.router.navigate(['/login']);
   }
 }

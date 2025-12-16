@@ -3,6 +3,31 @@
   padding: 40px 20px;
   max-width: 1200px;
   margin: 0 auto;
+  position: relative; /* Essential for Logout button positioning */
+}
+
+/* LOGOUT BUTTON (Top Right) */
+.logout-btn {
+  position: absolute;
+  top: 0;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #c77dff; /* Light purple */
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+  z-index: 10; /* Ensures it sits on top of everything */
+}
+
+.logout-btn:hover {
+  background: rgba(123, 44, 191, 0.3);
+  border-color: #9d4edd;
+  color: white;
+  transform: translateY(-2px);
 }
 
 /* Header & Search */
@@ -12,6 +37,7 @@
   align-items: center;
   margin-bottom: 50px;
   text-align: center;
+  margin-top: 20px; /* Gives space for the logout button */
 }
 
 h1 {
@@ -19,7 +45,7 @@ h1 {
   font-weight: 800;
   color: #ffffff;
   margin-bottom: 25px;
-  text-shadow: 0 0 10px rgba(138, 43, 226, 0.6); /* Purple Glow */
+  text-shadow: 0 0 10px rgba(138, 43, 226, 0.6);
 }
 
 .search-bar {
@@ -28,7 +54,7 @@ h1 {
   padding: 15px 25px;
   border-radius: 30px;
   border: 2px solid #3e2060;
-  background-color: rgba(20, 20, 30, 0.9); /* Dark semi-transparent */
+  background-color: rgba(20, 20, 30, 0.9);
   color: white;
   font-size: 1.1rem;
   outline: none;
@@ -40,11 +66,11 @@ h1 {
 }
 
 .search-bar:focus {
-  border-color: #9d4edd; /* Bright purple border on focus */
+  border-color: #9d4edd;
   box-shadow: 0 0 15px rgba(157, 78, 221, 0.4);
 }
 
-/* Grid Layout */
+/* Grid Layout (The part that was missing!) */
 .movie-grid {
   display: flex;
   flex-wrap: wrap;
@@ -54,8 +80,8 @@ h1 {
 
 /* Card Styling */
 .movie-card {
-  width: 220px;
-  background-color: #1e1e24; /* Dark card background */
+  width: 220px; /* This fixes the giant images */
+  background-color: #1e1e24;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 10px rgba(0,0,0,0.5);
@@ -66,7 +92,7 @@ h1 {
 
 .movie-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 10px 20px rgba(110, 35, 200, 0.3); /* Purple shadow on hover */
+  box-shadow: 0 10px 20px rgba(110, 35, 200, 0.3);
   border-color: #7b2cbf;
 }
 

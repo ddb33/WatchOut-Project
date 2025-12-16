@@ -1,74 +1,113 @@
-:host {
+/* 1. Center everything */
+.register-container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #121212; /* Dark background */
+  width: 100%;
 }
 
-.register-container {
-  background-color: #1e1e1e; /* Darker card background */
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+/* 2. Glass Card */
+.register-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 40px;
+  background: rgba(30, 30, 40, 0.85); /* Dark Glass */
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.6);
   text-align: center;
-  width: 300px;
-  color: #ffffff;
 }
 
-h2 {
-  margin-bottom: 1.5rem;
-  color: #ffffff;
+/* 3. Typography */
+.brand-header h2 {
+  font-size: 2rem;
+  color: #fff;
+  margin-bottom: 10px;
+  text-shadow: 0 0 10px rgba(199, 125, 255, 0.5); /* Purple glow */
 }
 
-.form-group {
-  margin-bottom: 1rem;
+.brand-header p {
+  color: #b0b0b0;
+  margin-bottom: 30px;
+  font-size: 0.9rem;
+}
+
+/* 4. Inputs */
+.input-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.input-group label {
+  display: block;
+  color: #ccc;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
 }
 
 input {
   width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #333;
-  border-radius: 4px;
-  background-color: #2c2c2c;
-  color: #ffffff;
-  box-sizing: border-box; /* Ensures padding doesn't affect width */
-}
-
-input::placeholder {
-  color: #bbbbbb;
-}
-
-button {
-  width: 100%;
-  padding: 0.75rem;
-  border: none;
-  border-radius: 4px;
-  background: linear-gradient(to right, #ff416c, #ff4b2b); /* Gradient button */
-  color: #ffffff;
+  padding: 12px 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid #444;
+  border-radius: 8px;
+  color: white;
   font-size: 1rem;
+  outline: none;
+  transition: all 0.3s;
+  box-sizing: border-box;
+}
+
+input:focus {
+  border-color: #9d4edd;
+  box-shadow: 0 0 8px rgba(157, 78, 221, 0.4);
+}
+
+/* HACK: Removes the ugly yellow browser auto-fill background */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px #1a1a20 inset !important;
+    -webkit-text-fill-color: white !important;
+}
+
+/* 5. Buttons */
+.register-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #7b2cbf, #5a189a); /* Purple gradient */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
   font-weight: bold;
   cursor: pointer;
-  transition: background 0.3s ease;
+  margin-top: 10px;
+  transition: transform 0.2s;
 }
 
-button:hover {
-  background: linear-gradient(to right, #e83e65, #e84a2a);
+.register-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(123, 44, 191, 0.5);
 }
 
-.toggle-link {
-  margin-top: 1rem;
+/* 6. Footer/Links */
+.footer {
+  margin-top: 30px;
+  border-top: 1px solid #333;
+  padding-top: 20px;
+  color: #888;
   font-size: 0.9rem;
-  color: #bbbbbb;
-  cursor: pointer;
 }
 
-.toggle-link:hover {
+.footer a {
+  color: #c77dff;
+  text-decoration: none;
+}
+
+.footer a:hover {
   text-decoration: underline;
-}
-
-.message {
-  margin-top: 1rem;
-  font-size: 0.9rem;
-  color: #ff416c; /* Red color for error messages */
 }
