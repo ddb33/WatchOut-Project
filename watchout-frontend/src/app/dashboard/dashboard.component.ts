@@ -16,11 +16,10 @@ export class DashboardComponent implements OnInit {
   constructor(
     private http: HttpClient, 
     private router: Router,
-    private cdr: ChangeDetectorRef // Forces the UI to show movies immediately
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    // This calls the API as soon as the component loads
     this.fetchMovies();
   }
 
@@ -29,7 +28,6 @@ export class DashboardComponent implements OnInit {
     this.http.get(url).subscribe({
       next: (data: any) => {
         this.movies = data.results;
-        // This line fixes the "must click to see movies" bug
         this.cdr.detectChanges(); 
       },
       error: (err) => console.error('TMDB API Error:', err)
@@ -46,5 +44,10 @@ export class DashboardComponent implements OnInit {
       this.movies = data.results;
       this.cdr.detectChanges();
     });
+  }
+
+  onLogout() {
+    localStorage.removeItem('currentUser');
+    this.router.navigate(['/login']);
   }
 }
