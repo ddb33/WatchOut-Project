@@ -6,13 +6,17 @@ import { RegisterComponent } from './register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MovieDetailComponent } from './movie-detail/movie-detail.component';
 import { WatchlistComponent } from './watchlist/watchlist.component';
+import { AuthGuard } from './auth.guard'; // Import the guard
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'movie/:id', component: MovieDetailComponent },
-  { path: 'watchlist', component: WatchlistComponent },
+  
+  // Protected Routes
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'movie/:id', component: MovieDetailComponent, canActivate: [AuthGuard] },
+  { path: 'watchlist', component: WatchlistComponent, canActivate: [AuthGuard] },
+  
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', redirectTo: '/login' }
 ];

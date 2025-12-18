@@ -92,3 +92,52 @@
   text-decoration: none;
   font-weight: 600;
 }
+
+.login-container {
+  background-color: #0b0c10;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-card {
+  background: #1f2029;
+  padding: 40px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  color: white;
+}
+
+.form-group { margin-bottom: 20px; }
+
+input {
+  width: 100%;
+  padding: 12px;
+  background: #0b0c10;
+  border: 1px solid #32333e;
+  color: white;
+  border-radius: 6px;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: #6a1b9a;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.error-msg {
+  color: #ff4d4d;
+  font-size: 14px;
+  margin-bottom: 15px;
+  background: rgba(255, 77, 77, 0.1);
+  padding: 10px;
+  border-radius: 4px;
+}

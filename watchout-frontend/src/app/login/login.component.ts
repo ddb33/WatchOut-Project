@@ -11,39 +11,34 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   email = '';
   password = '';
-  errorMessage = '';
+  errorMessage = ''; // Added to fix the TS2339 error
 
   constructor(private http: HttpClient, private router: Router) {}
 
   onLogin() {
-    // Debugging: Check if the button is at least being clicked
-    console.log('Login button clicked for:', this.email);
+    this.errorMessage = ''; // Clear previous errors
 
     if (!this.email || !this.password) {
-      this.errorMessage = 'Please fill in all fields.';
+      this.errorMessage = 'Please enter both email and password';
       return;
     }
 
-    const loginData = { email: this.email, password: this.password };
-    
-    // Request sent to your .20 Backend VM
-    this.http.post('http://192.168.50.20:5000/api/auth/login', loginData).subscribe({
-      next: (response: any) => {
-        console.log('Login Success:', response);
-        localStorage.setItem('currentUser', JSON.stringify({
-          username: response.username,
-          email: response.email
-        }));
-        this.router.navigate(['/dashboard']);
-      },
-      error: (err) => {
-        console.error('Login Error:', err);
-        if (err.status === 403) {
-          this.errorMessage = 'Account not verified. Check backend terminal for link.';
-        } else {
-          this.errorMessage = 'Invalid email or password.';
+    const loginData = {
+      email: this.email,
+      password: this.password
+    };
+
+    this.http.post('http://192.168.50.20:5000/api/auth/login', loginData)
+      .subscribe({
+        next: (user: any) => {
+          // Store user in localStorage for AuthGuard
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          this.router.navigate(['/dashboard']);
+        },
+        error: (err) => {
+          // Capture backend error message and display in template
+          this.errorMessage = err.error?.error || 'Login failed. Please try again.';
         }
-      }
-    });
+      });
   }
 }

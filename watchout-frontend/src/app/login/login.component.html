@@ -1,24 +1,21 @@
-<div class="auth-wrapper">
-  <div class="auth-card">
-    <h2>Welcome Back</h2>
-    <p class="auth-subtitle">Login to your account to start tracking.</p>
+<div class="login-container">
+  <div class="login-card">
+    <h1>Login</h1>
     
-    <div class="input-group">
-      <label>Email Address</label>
-      <input type="email" [(ngModel)]="email" placeholder="Enter your email">
+    <div class="form-group">
+      <input type="email" [(ngModel)]="email" placeholder="Email Address">
     </div>
-
-    <div class="input-group">
-      <label>Password</label>
-      <input type="password" [(ngModel)]="password" placeholder="••••">
+    
+    <div class="form-group">
+      <input type="password" [(ngModel)]="password" placeholder="Password">
     </div>
-
-    <button class="auth-btn" (click)="onLogin()">Login to Dashboard</button>
 
     <p *ngIf="errorMessage" class="error-msg">{{ errorMessage }}</p>
+
+    <button (click)="onLogin()">Sign In</button>
     
-    <div class="auth-footer">
-      <p>Need an account? <a routerLink="/register">Sign Up</a></p>
-    </div>
+    <p class="switch-link">
+      Don't have an account? <a routerLink="/register">Register here</a>
+    </p>
   </div>
 </div>
