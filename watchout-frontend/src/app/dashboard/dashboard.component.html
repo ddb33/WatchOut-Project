@@ -2,8 +2,12 @@
   <header>
     <div class="header-top">
       <h1>Welcome to WatchOut</h1>
-      <button class="signout-btn" (click)="onLogout()">Sign Out</button>
+      <div class="header-actions">
+        <button class="watchlist-btn" routerLink="/watchlist">My Watchlist</button>
+        <button class="signout-btn" (click)="onLogout()">Sign Out</button>
+      </div>
     </div>
+    
     <div class="search-bar">
       <input 
         type="text" 

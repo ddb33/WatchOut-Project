@@ -1,0 +1,41 @@
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+@Component({
+  selector: 'app-watchlist',
+  standalone: false,
+  templateUrl: './watchlist.component.html',
+  styleUrls: ['./watchlist.component.css']
+})
+export class WatchlistComponent implements OnInit {
+  movies: any[] = [];
+  private apiKey = '0fe3133595252f07c96220d4833513ad';
+
+  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {}
+
+  ngOnInit(): void {
+    const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    if (user.email) {
+      this.fetchWatchlistIds(user.email);
+    }
+  }
+
+  fetchWatchlistIds(email: string) {
+    this.http.get<string[]>(`http://192.168.50.20:5000/api/watchlist/${email}`).subscribe({
+      next: (ids) => {
+        // Clear previous list to avoid duplicates on refresh
+        this.movies = [];
+        ids.forEach(id => this.fetchMovieDetails(id));
+      },
+      error: (err) => console.error('Watchlist fetch error', err)
+    });
+  }
+
+  fetchMovieDetails(id: string) {
+    const url = `https://api.themoviedb.org/3/movie/${id}?api_key=${this.apiKey}`;
+    this.http.get(url).subscribe((data: any) => {
+      this.movies.push(data);
+      this.cdr.detectChanges();
+    });
+  }
+}

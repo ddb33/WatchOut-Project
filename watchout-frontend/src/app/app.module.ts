@@ -1,14 +1,16 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http'; // Required for API calls
-import { FormsModule } from '@angular/forms'; // Required for ngModel and Search
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
-import { AppRoutingModule } from './app-routing.module'; // Required for navigation
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MovieDetailComponent } from './movie-detail/movie-detail.component';
+import { WatchlistComponent } from './watchlist/watchlist.component';
 
 @NgModule({
   declarations: [
@@ -16,13 +18,15 @@ import { MovieDetailComponent } from './movie-detail/movie-detail.component';
     LoginComponent,
     RegisterComponent,
     DashboardComponent,
-    MovieDetailComponent
+    MovieDetailComponent,
+    WatchlistComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule, // Enables communication with .20 Backend
-    FormsModule       // Enables two-way data binding for search and forms
+    HttpClientModule,
+    FormsModule,
+    CommonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

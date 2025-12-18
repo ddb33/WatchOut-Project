@@ -1,0 +1,33 @@
+<div class="dashboard-container">
+  <header>
+    <div class="header-top">
+      <h1>My Watchlist</h1>
+      <div class="header-actions">
+        <button class="watchlist-btn" routerLink="/dashboard">Back to Home</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="movie-grid" *ngIf="movies.length > 0; else emptyState">
+    <div class="movie-card" *ngFor="let movie of movies">
+      <button class="delete-btn" (click)="removeFromWatchlist(movie.id)">&times;</button>
+      
+      <img 
+        [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" 
+        [alt]="movie.title" 
+        [routerLink]="['/movie', movie.id]" 
+        [queryParams]="{ from: 'watchlist' }"
+      >
+      <div class="movie-info">
+        <h3>{{ movie.title }}</h3>
+      </div>
+    </div>
+  </main>
+
+  <ng-template #emptyState>
+    <div style="text-align: center; color: gray; margin-top: 100px;">
+      <h2>Your watchlist is empty.</h2>
+      <p>Go to the home page to add some movies!</p>
+    </div>
+  </ng-template>
+</div>
