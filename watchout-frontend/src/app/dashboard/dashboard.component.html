@@ -1,37 +1,26 @@
-<div class="main-container">
-  
-  <button class="logout-btn" (click)="logout()">Sign Out ➜</button>
-
-  <div class="header-section">
+<div class="dashboard-container">
+  <header>
     <h1>Welcome to WatchOut</h1>
-    
-    <input 
-      type="text" 
-      placeholder="Search for a movie..." 
-      [(ngModel)]="searchText" 
-      (input)="onSearch()"
-      class="search-bar"
-    >
-  </div>
-
-  <div class="movie-grid">
-    <div *ngFor="let movie of filteredMovies" class="movie-card" [routerLink]="['/movie', movie._id]">
-      
-      <img 
-        [src]="movie.poster" 
-        [alt]="movie.title" 
-        class="movie-poster"
+    <div class="search-bar">
+      <input 
+        type="text" 
+        placeholder="Search for a movie..." 
+        [(ngModel)]="searchQuery" 
+        (input)="onSearch()"
       >
-      
+    </div>
+  </header>
+
+  <main class="movie-grid">
+    <div class="movie-card" *ngFor="let movie of movies">
+      <img 
+        [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" 
+        [alt]="movie.title" 
+        [routerLink]="['/movie', movie.id]"
+      >
       <div class="movie-info">
         <h3>{{ movie.title }}</h3>
-      </div>
-      
+        </div>
     </div>
-  </div>
-
-  <div *ngIf="filteredMovies.length === 0" class="no-results">
-    <p>No movies found.</p>
-  </div>
-
+  </main>
 </div>

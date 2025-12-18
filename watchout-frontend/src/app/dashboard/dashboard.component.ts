@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router'; // <--- Import Router
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,61 +9,42 @@ import { Router } from '@angular/router'; // <--- Import Router
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  
-  searchText: string = '';
   movies: any[] = [];
-  filteredMovies: any[] = [];
-
-  // ⚠️ YOUR API KEY HERE
+  searchQuery: string = '';
   private apiKey = '0fe3133595252f07c96220d4833513ad'; 
-  private apiUrl = 'https://api.themoviedb.org/3/movie/now_playing';
 
   constructor(
     private http: HttpClient, 
-    private cdr: ChangeDetectorRef,
-    private router: Router // <--- Inject Router
+    private router: Router,
+    private cdr: ChangeDetectorRef // Forces the UI to show movies immediately
   ) {}
 
   ngOnInit(): void {
-    console.log('Dashboard initialized. Fetching movies...');
+    // This calls the API as soon as the component loads
     this.fetchMovies();
   }
 
   fetchMovies() {
-    const url = `${this.apiUrl}?api_key=${this.apiKey}&language=en-US&page=1`;
-
-    this.http.get<any>(url).subscribe({
-      next: (data) => {
-        console.log('API Data received:', data);
-
-        this.movies = data.results.map((m: any) => ({
-          _id: m.id,
-          title: m.title,
-          poster: m.poster_path ? `https://image.tmdb.org/t/p/w500${m.poster_path}` : 'https://placehold.co/500x750?text=No+Image',
-          overview: m.overview,
-          release_date: m.release_date
-        }));
-
-        this.filteredMovies = [...this.movies];
-        this.cdr.detectChanges();
+    const url = `https://api.themoviedb.org/3/movie/popular?api_key=${this.apiKey}&language=en-US&page=1`;
+    this.http.get(url).subscribe({
+      next: (data: any) => {
+        this.movies = data.results;
+        // This line fixes the "must click to see movies" bug
+        this.cdr.detectChanges(); 
       },
-      error: (error) => {
-        console.error('API Error:', error);
-      }
+      error: (err) => console.error('TMDB API Error:', err)
     });
   }
 
-  onSearch(): void {
-    const text = this.searchText.toLowerCase();
-    this.filteredMovies = this.movies.filter(movie => {
-      return movie.title.toLowerCase().includes(text);
+  onSearch() {
+    if (this.searchQuery.trim() === '') {
+      this.fetchMovies();
+      return;
+    }
+    const url = `https://api.themoviedb.org/3/search/movie?api_key=${this.apiKey}&query=${this.searchQuery}`;
+    this.http.get(url).subscribe((data: any) => {
+      this.movies = data.results;
+      this.cdr.detectChanges();
     });
-  }
-
-  // <--- THE NEW LOGOUT FUNCTION
-  logout() {
-    // In the future, this is where we delete the token
-    console.log('User logged out');
-    this.router.navigate(['/login']);
   }
 }

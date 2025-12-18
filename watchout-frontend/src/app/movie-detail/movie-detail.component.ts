@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -9,18 +9,16 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./movie-detail.component.css']
 })
 export class MovieDetailComponent implements OnInit {
-
   movie: any;
   loading: boolean = true;
   errorMessage: string = '';
-
-  // ⚠️ YOUR API KEY (Ensure this is still correct)
   private apiKey = '0fe3133595252f07c96220d4833513ad'; 
 
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
-    private cdr: ChangeDetectorRef // <--- Injecting the tool to force updates
+    private cdr: ChangeDetectorRef,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -30,13 +28,10 @@ export class MovieDetailComponent implements OnInit {
 
   fetchMovieDetail(id: string | null) {
     if (!id) return;
-
     const url = `https://api.themoviedb.org/3/movie/${id}?api_key=${this.apiKey}&language=en-US`;
 
     this.http.get<any>(url).subscribe({
       next: (data) => {
-        console.log('Movie Data Received:', data);
-        
         this.movie = {
           title: data.title,
           overview: data.overview,
@@ -44,18 +39,39 @@ export class MovieDetailComponent implements OnInit {
           vote_average: data.vote_average,
           release_date: data.release_date
         };
-        
         this.loading = false;
-        
-        // <--- FORCE THE SCREEN TO UPDATE NOW
         this.cdr.detectChanges(); 
       },
       error: (error) => {
-        console.error('API Error:', error);
         this.errorMessage = 'Could not load movie details.';
         this.loading = false;
-        this.cdr.detectChanges(); // Force update on error too
+        this.cdr.detectChanges();
       }
+    });
+  }
+
+  addToWatchlist() {
+    const userSession = localStorage.getItem('currentUser');
+    
+    if (!userSession) {
+      alert('You must be logged in to track movies!');
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    const user = JSON.parse(userSession);
+    const id = this.route.snapshot.paramMap.get('id');
+
+    const payload = {
+      email: user.email,
+      movieId: id,
+      movieTitle: this.movie.title
+    };
+
+    // Pointing to your Backend VM private IP
+    this.http.post('http://192.168.50.20:5000/api/watchlist/add', payload).subscribe({
+      next: () => alert(`${this.movie.title} added to your watchlist!`),
+      error: (err) => alert('Error adding to watchlist. Is the Backend VM running?')
     });
   }
 

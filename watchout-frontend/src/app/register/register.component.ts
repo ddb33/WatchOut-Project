@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
@@ -8,16 +9,22 @@ import { Router } from '@angular/router';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-
-  username = ''; // <--- Added username field
+  username = '';
   email = '';
   password = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private http: HttpClient) {}
 
   onRegister() {
-    // Placeholder logic: Log the data and go to login page
-    console.log('Registering user:', this.username, this.email);
-    this.router.navigate(['/login']);
+    const userData = { username: this.username, email: this.email, password: this.password };
+    
+    // Send data to your Backend VM (.20)
+    this.http.post('http://192.168.50.20:5000/api/auth/register', userData).subscribe({
+      next: (res) => {
+        alert('Registration Successful!');
+        this.router.navigate(['/login']); // This handles the redirection
+      },
+      error: (err) => alert('Registration failed. Check if Backend VM is running.')
+    });
   }
 }
