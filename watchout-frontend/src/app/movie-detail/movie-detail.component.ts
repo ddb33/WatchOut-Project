@@ -10,6 +10,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class MovieDetailComponent implements OnInit {
   movie: any;
+  watchProviders: any[] = [];
+  providerLink: string = ''; 
   loading: boolean = true;
   errorMessage: string = '';
   backRoute: string = '/dashboard';
@@ -32,6 +34,7 @@ export class MovieDetailComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.fetchMovieDetail(id);
+      this.fetchWatchProviders(id);
     }
   }
 
@@ -43,9 +46,21 @@ export class MovieDetailComponent implements OnInit {
         this.loading = false;
         this.cdr.detectChanges();
       },
-      error: (err) => {
+      error: () => {
         this.errorMessage = 'Could not load movie details.';
         this.loading = false;
+      }
+    });
+  }
+
+  fetchWatchProviders(id: string): void {
+    const url = `https://api.themoviedb.org/3/movie/${id}/watch/providers?api_key=${this.apiKey}`;
+    this.http.get<any>(url).subscribe(data => {
+      if (data.results && data.results.US) {
+        this.providerLink = data.results.US.link; 
+        if (data.results.US.flatrate) {
+          this.watchProviders = data.results.US.flatrate;
+        }
         this.cdr.detectChanges();
       }
     });
@@ -54,7 +69,7 @@ export class MovieDetailComponent implements OnInit {
   addToWatchlist(): void {
     const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
     if (!user.email) {
-      alert('Please login first!');
+      alert('Must be logged in to track movies!'); 
       this.router.navigate(['/login']);
       return;
     }
@@ -63,8 +78,8 @@ export class MovieDetailComponent implements OnInit {
       email: user.email,
       movieId: this.movie.id
     }).subscribe({
-      next: () => alert(`${this.movie.title} added!`),
-      error: () => alert('Error: Is the Backend VM running?')
+      next: () => alert(`${this.movie.title} added to watchlist!`),
+      error: () => alert('Error: Check if Backend VM is running.')
     });
   }
 

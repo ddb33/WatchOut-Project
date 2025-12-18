@@ -6,43 +6,22 @@
   align-items: center;
   padding: 20px;
   color: white;
-  font-family: 'Inter', sans-serif;
 }
 
-.content-container {
-  width: 100%;
-  max-width: 900px;
-}
+.content-container { width: 100%; max-width: 900px; }
 
-.back-navigation {
-  background: none;
-  border: none;
-  color: #6a1b9a;
-  cursor: pointer;
-  font-size: 16px;
-  margin-bottom: 20px;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  transition: color 0.3s;
-}
-
-.back-navigation:hover {
-  color: #4a148c;
-}
-
-/* The Movie Card Container */
 .movie-detail-card {
   background: #1f2029;
   border-radius: 20px;
-  display: flex;
+  display: flex; /* Ensures side-by-side layout */
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  animation: fadeIn 0.5s ease;
+  min-height: 500px;
 }
 
 .poster-container {
   flex: 0 0 350px;
+  background-color: #000;
 }
 
 .poster-container img {
@@ -59,75 +38,14 @@
   flex-direction: column;
 }
 
-.info-container h1 {
-  font-size: 36px;
-  margin: 0 0 10px 0;
-  font-weight: 700;
-}
+.streaming-section { margin-bottom: 20px; }
+.streaming-label { font-size: 12px; color: #9496a1; text-transform: uppercase; margin-bottom: 10px; font-weight: 600; }
+.provider-logos { display: flex; gap: 12px; }
+.provider-icon { cursor: pointer; transition: transform 0.2s; }
+.provider-icon:hover { transform: scale(1.1); }
+.provider-icon img { width: 40px; height: 40px; border-radius: 8px; }
 
-.movie-meta {
-  color: #9496a1;
-  font-size: 14px;
-  margin-bottom: 25px;
-}
-
-.overview-section {
-  flex: 1;
-  margin-bottom: 30px;
-}
-
-.overview-section p {
-  line-height: 1.6;
-  color: #e0e0e0;
-  font-size: 16px;
-}
-
-/* Button Styling */
-.button-group {
-  display: flex;
-  gap: 15px;
-}
-
-.btn-primary {
-  background-color: #6a1b9a;
-  color: white;
-  border: none;
-  padding: 14px 24px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: all 0.3s;
-}
-
-.btn-secondary {
-  background-color: #32333e;
-  color: white;
-  border: none;
-  padding: 14px 24px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: all 0.3s;
-}
-
-.btn-primary:hover { background-color: #4a148c; transform: translateY(-2px); }
-.btn-secondary:hover { background-color: #454652; transform: translateY(-2px); }
-
-.status-message {
-  text-align: center;
-  font-size: 18px;
-}
-
-.status-message.error { color: #ff4d4d; }
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Responsive for smaller screens */
-@media (max-width: 768px) {
-  .movie-detail-card { flex-direction: column; }
-  .poster-container { flex: 0 0 auto; height: 400px; }
-  .button-group { flex-direction: column; }
-}
+.overview-section { flex: 1; margin-bottom: 25px; }
+.button-group { display: flex; gap: 15px; }
+.btn-primary { background-color: #6a1b9a; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; }
+.btn-secondary { background-color: #32333e; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; }

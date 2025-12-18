@@ -1,6 +1,5 @@
 <div class="detail-wrapper">
   <div *ngIf="loading" class="status-message">Loading movie details...</div>
-  <div *ngIf="errorMessage" class="status-message error">{{ errorMessage }}</div>
 
   <div *ngIf="movie && !loading" class="content-container">
     <button class="back-navigation" (click)="goBack()">
@@ -19,17 +18,26 @@
           Rating: {{ movie.vote_average | number:'1.1-1' }}/10
         </p>
         
+        <div class="streaming-section" *ngIf="watchProviders.length > 0">
+          <p class="streaming-label">CLICK AN ICON TO VIEW STREAMING OPTIONS:</p>
+          <div class="provider-logos">
+            <a *ngFor="let provider of watchProviders" 
+               [href]="providerLink" 
+               target="_blank" 
+               class="provider-icon">
+              <img [src]="'https://image.tmdb.org/t/p/original' + provider.logo_path" 
+                   [title]="'View options for ' + provider.provider_name">
+            </a>
+          </div>
+        </div>
+
         <div class="overview-section">
           <p>{{ movie.overview }}</p>
         </div>
 
         <div class="button-group">
-          <button class="btn-secondary" (click)="getTickets()">
-            <span class="icon">🎟️</span> Find Local Showtimes
-          </button>
-          <button class="btn-primary" (click)="addToWatchlist()">
-            + Add to Watchlist
-          </button>
+          <button class="btn-secondary" (click)="getTickets()">🎟️ Showtimes</button>
+          <button class="btn-primary" (click)="addToWatchlist()">+ Add to Watchlist</button>
         </div>
       </div>
     </div>
