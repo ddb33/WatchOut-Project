@@ -11,7 +11,7 @@ import { HttpClient } from '@angular/common/http';
 export class MovieDetailComponent implements OnInit {
   movie: any;
   watchProviders: any[] = [];
-  providerLink: string = ''; 
+  providerLink: string = '';
   loading: boolean = true;
   errorMessage: string = '';
   backRoute: string = '/dashboard';
@@ -66,10 +66,17 @@ export class MovieDetailComponent implements OnInit {
     });
   }
 
+  // Extra Credit: Ticket Buying Logic
+  buyTickets(): void {
+    const query = encodeURIComponent(this.movie.title);
+    const ticketUrl = `https://www.fandango.com/search?q=${query}&mode=general`;
+    window.open(ticketUrl, '_blank');
+  }
+
   addToWatchlist(): void {
     const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
     if (!user.email) {
-      alert('Must be logged in to track movies!'); 
+      alert('Must be logged in to track movies!');
       this.router.navigate(['/login']);
       return;
     }
@@ -81,11 +88,6 @@ export class MovieDetailComponent implements OnInit {
       next: () => alert(`${this.movie.title} added to watchlist!`),
       error: () => alert('Error: Check if Backend VM is running.')
     });
-  }
-
-  getTickets(): void {
-    const query = encodeURIComponent(`Showtimes for ${this.movie.title}`);
-    window.open(`https://www.google.com/search?q=${query}`, '_blank');
   }
 
   goBack(): void {

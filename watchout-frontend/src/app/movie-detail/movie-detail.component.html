@@ -21,12 +21,8 @@
         <div class="streaming-section" *ngIf="watchProviders.length > 0">
           <p class="streaming-label">CLICK AN ICON TO VIEW STREAMING OPTIONS:</p>
           <div class="provider-logos">
-            <a *ngFor="let provider of watchProviders" 
-               [href]="providerLink" 
-               target="_blank" 
-               class="provider-icon">
-              <img [src]="'https://image.tmdb.org/t/p/original' + provider.logo_path" 
-                   [title]="'View options for ' + provider.provider_name">
+            <a *ngFor="let provider of watchProviders" [href]="providerLink" target="_blank" class="provider-icon">
+              <img [src]="'https://image.tmdb.org/t/p/original' + provider.logo_path" [title]="provider.provider_name">
             </a>
           </div>
         </div>
@@ -36,8 +32,8 @@
         </div>
 
         <div class="button-group">
-          <button class="btn-secondary" (click)="getTickets()">🎟️ Showtimes</button>
-          <button class="btn-primary" (click)="addToWatchlist()">+ Add to Watchlist</button>
+          <button class="btn-primary ticket-btn" (click)="buyTickets()">🎟️ Buy Local Tickets</button>
+          <button class="btn-secondary" (click)="addToWatchlist()">+ Add to Watchlist</button>
         </div>
       </div>
     </div>
