@@ -8,7 +8,8 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./watchlist.component.css']
 })
 export class WatchlistComponent implements OnInit {
-  movies: any[] = [];
+  releasedMovies: any[] = [];
+  upcomingMovies: any[] = []; // Specifically for the "Calendar" deliverable
   private apiKey = '0fe3133595252f07c96220d4833513ad';
 
   constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {}
@@ -20,7 +21,8 @@ export class WatchlistComponent implements OnInit {
 
   fetchWatchlistIds(email: string) {
     this.http.get<string[]>(`http://192.168.50.20:5000/api/watchlist/${email}`).subscribe(ids => {
-      this.movies = [];
+      this.releasedMovies = [];
+      this.upcomingMovies = [];
       ids.forEach(id => this.fetchMovieDetails(id));
     });
   }
@@ -28,7 +30,18 @@ export class WatchlistComponent implements OnInit {
   fetchMovieDetails(id: string) {
     this.http.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${this.apiKey}`)
       .subscribe((data: any) => {
-        this.movies.push(data);
+        const today = new Date();
+        const releaseDate = new Date(data.release_date);
+
+        // Sort movies into "Released" or "Upcoming Calendar"
+        if (releaseDate > today) {
+          this.upcomingMovies.push(data);
+        } else {
+          this.releasedMovies.push(data);
+        }
+        
+        // Sort upcoming movies by date so it looks like a calendar
+        this.upcomingMovies.sort((a, b) => new Date(a.release_date).getTime() - new Date(b.release_date).getTime());
         this.cdr.detectChanges();
       });
   }
@@ -39,7 +52,8 @@ export class WatchlistComponent implements OnInit {
       email: user.email,
       movieId: movieId
     }).subscribe(() => {
-      this.movies = this.movies.filter(m => m.id !== movieId);
+      this.releasedMovies = this.releasedMovies.filter(m => m.id !== movieId);
+      this.upcomingMovies = this.upcomingMovies.filter(m => m.id !== movieId);
     });
   }
 }
